@@ -49,10 +49,12 @@ for v in 2 3 ; do
     # if required by kivy (SDL being used or not)
     # pygame==1.9.2
 
-    $pip install pyserial==3.0.1
+    $pip install pyserial==3.2.1
     $pip install tornado==3.1.1
 
 
     deactivate
 done
 
+# remove cache
+#rm -fr /root/.cache/pip

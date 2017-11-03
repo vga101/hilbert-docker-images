@@ -4,7 +4,7 @@ mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 # site-specific settings
 include ../../../Makefile-local.inc
 
-U = hilbert
+U = hits
 APP  = hitsfat
 
 # default variables and targets
