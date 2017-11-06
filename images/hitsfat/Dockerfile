@@ -92,6 +92,12 @@ RUN /usr/local/bin/update.sh \
     # cleanup
     && /usr/local/bin/clean.sh
 
+# 2nd cache (merge into above later!)
+RUN /usr/local/bin/update.sh \
+    && /usr/local/bin/install.sh \
+            # general:
+            x11-utils \
+    && /usr/local/bin/clean.sh
 
 RUN pip2 install --upgrade pip virtualenv setuptools \
     && pip3 install --upgrade pip virtualenv setuptools
