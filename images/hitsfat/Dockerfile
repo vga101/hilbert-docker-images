@@ -2,13 +2,17 @@ FROM hilbert/kiosk
 
 LABEL maintainer "Volker Gaibler <volker.gaibler@h-its.org>"
 
-# add cuda repository, taken from hilbert-docker-images/images/cuda_runtime/Dockerfile
-RUN NVIDIA_GPGKEY_SUM=d1be581509378368edeec8c1eb2958702feedf3bc3d17011adbf24efacce4ab5 && \
-    NVIDIA_GPGKEY_FPR=ae09fe4bbd223a84b2ccfce3f60f4b3d7fa2af80 && \
-    apt-key adv --fetch-keys http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/7fa2af80.pub && \
-    apt-key adv --export --no-emit-version -a $NVIDIA_GPGKEY_FPR | tail -n +2 > cudasign.pub && \
-    echo "$NVIDIA_GPGKEY_SUM  cudasign.pub" | sha256sum -c --strict - && rm cudasign.pub && \
-    echo "deb http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64 /" > /etc/apt/sources.list.d/cuda.list
+RUN \
+    # oracle java 1.8 for Gaia Sky 1.5
+    apt-add-repository --yes ppa:webupd8team/java \
+    && echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | /usr/bin/debconf-set-selections \
+    # add cuda repository, taken from hilbert-docker-images/images/cuda_runtime/Dockerfile
+    && NVIDIA_GPGKEY_SUM=d1be581509378368edeec8c1eb2958702feedf3bc3d17011adbf24efacce4ab5 \
+    && NVIDIA_GPGKEY_FPR=ae09fe4bbd223a84b2ccfce3f60f4b3d7fa2af80 \
+    && apt-key adv --fetch-keys http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/7fa2af80.pub \
+    && apt-key adv --export --no-emit-version -a $NVIDIA_GPGKEY_FPR | tail -n +2 > cudasign.pub \
+    && echo "$NVIDIA_GPGKEY_SUM  cudasign.pub" | sha256sum -c --strict - && rm cudasign.pub \
+    && echo "deb http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64 /" > /etc/apt/sources.list.d/cuda.list
 ENV CUDA_VERSION 7.5.18
 ENV CUDA_PKG_VERSION 7-5=7.5-18
 ENV PATH /usr/local/cuda/bin:${PATH}
@@ -70,14 +74,21 @@ RUN /usr/local/bin/update.sh \
             cuda-7-5 \
             freeglut3-dev \
             # gaia sky
-            default-jre \
-            default-jdk \
-            # convencience
+            #default-jre \
+            #default-jdk \
+            oracle-java8-installer=8u151-1~webupd8~0 \
+            oracle-java8-set-default \
+            # convencience and debugging
             nano \
             vim \
             x11-apps \
             dstat \
             bash-completion \
+            x11-utils \
+            strace \
+            usbutils \
+            joystick \
+            jstest-gtk \
     # cuda_runtime
     && ln -s cuda-7.5 /usr/local/cuda \
     && echo "/usr/local/cuda/lib64" >> /etc/ld.so.conf.d/cuda.conf \
@@ -88,16 +99,16 @@ RUN /usr/local/bin/update.sh \
     && dpkg -x /tmp/gpu-deployment-kit_*.deb . \
     && mv usr/include/nvidia/gdk/* /usr/local/cuda/include \
     && mv usr/src/gdk/nvml/lib/* /usr/local/cuda/lib64/stubs \
-    #&& rm -rf /tmp/gpu-deployment-kit* \
-    # cleanup
-    && /usr/local/bin/clean.sh
+    && rm -rf /tmp/gpu-deployment-kit*
+    # no cleanup
+    # && /usr/local/bin/clean.sh
 
 # 2nd cache (merge into above later!)
-RUN /usr/local/bin/update.sh \
-    && /usr/local/bin/install.sh \
-            # general:
-            x11-utils \
-    && /usr/local/bin/clean.sh
+#RUN /usr/local/bin/update.sh \
+#    && /usr/local/bin/install.sh \
+#            # general:
+#    #&& /usr/local/bin/clean.sh
+#    && echo DONE
 
 RUN pip2 install --upgrade pip virtualenv setuptools \
     && pip3 install --upgrade pip virtualenv setuptools
