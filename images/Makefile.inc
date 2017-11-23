@@ -37,9 +37,11 @@ REPO ?= ${U}
 # TODO: Add tag depending on git branch!?
 
 # Get the latest git commit ID
-GIT_COMMIT ?= $(strip $(shell git rev-parse --short HEAD))
+#GIT_COMMIT ?= $(strip $(shell git rev-parse --short HEAD))
+GIT_COMMIT ?= $(strip $(shell git describe --always --dirty --long))
 # Get the git repository URL
-GIT_ORIGIN_URL ?= $(strip $(shell git config --get remote.origin.url))
+#GIT_ORIGIN_URL ?= $(strip $(shell git config --get remote.origin.url))
+GIT_ORIGIN_URL ?= $(strip $(shell git ls-remote --get-url))
 # Get the current checkout status
 GIT_NOT_CLEAN_CHECK ?= $(strip $(shell git status --porcelain))
 
@@ -112,17 +114,17 @@ debug:
 	$(ECHO) "DOCKER_BUILD_OPTS : ${DOCKER_BUILD_OPTS}"
 
 DOCKER_BUILD_OPTS_BASIC=--pull=false --force-rm=true --rm=true \
---no-cache=false
+--no-cache=false \
+--build-arg VCS_REF="${VCS_REF}" \
+--build-arg VCS_URL="${VCS_URL}" \
 
 DOCKER_BUILD_OPTS_SIMPLE=${DOCKER_BUILD_OPTS_BASIC} \
 --build-arg IMAGE_VERSION="${IMAGE_VERSION}"
 
 DOCKER_BUILD_OPTS=${DOCKER_BUILD_OPTS_SIMPLE} \
---build-arg VCS_REF="${VCS_REF}" \
---build-arg VCS_URL="${VCS_URL}" \
 --build-arg GIT_NOT_CLEAN_CHECK="${GIT_NOT_CLEAN_CHECK}" \
 --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
---build-arg DOCKERFILE="/images/${APP}/${APP}_${IMAGE_VERSION}_Dockerfile"
+--build-arg DOCKERFILE="${APP}_${IMAGE_VERSION}_Dockerfile"
 
 
 TMP_DF=${mkfile_dir}/${APP}_${IMAGE_VERSION}_Dockerfile

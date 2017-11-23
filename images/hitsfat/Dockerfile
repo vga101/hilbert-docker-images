@@ -68,11 +68,15 @@ RUN /usr/local/bin/update.sh \
             cuda-cudart-dev-$CUDA_PKG_VERSION \
             cuda-driver-dev-$CUDA_PKG_VERSION \
             cuda-samples-$CUDA_PKG_VERSION \
-            # bonsai
+            # bonsai and friends
             cmake \
             cuda-runtime-7-5 \
             cuda-7-5 \
             freeglut3-dev \
+            qt-sdk \
+            libqt5webkit5-dev \
+            x11-xserver-utils \
+            compton \
             # gaia sky
             #default-jre \
             #default-jdk \

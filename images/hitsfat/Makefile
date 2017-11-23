@@ -1,4 +1,5 @@
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
+# version of base image:
 # IMAGE_VERSION ?= latest
 
 # site-specific settings

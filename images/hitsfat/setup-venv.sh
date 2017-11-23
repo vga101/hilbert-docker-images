@@ -52,6 +52,8 @@ for v in 2 3 ; do
     $pip install pyserial==3.2.1
     $pip install tornado==3.1.1
 
+    # bonsai server: tested with psutil 1.2.1, newer may work
+    $pip install psutil==1.2.1
 
     deactivate
 done
