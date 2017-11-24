@@ -1,4 +1,6 @@
-FROM hilbert/kiosk
+# base image digest:
+# latest (as of 2017-11-24)
+FROM hilbert/kiosk@sha256:2298244fa569850b5789dfd9a6564728f7671cf5f323b957404dd671936004c6
 
 RUN \
     # oracle java 1.8 for Gaia Sky 1.5
