@@ -34,6 +34,10 @@ for v in 2 3 ; do
     $pip install Cython==0.23
     $pip install kivy==1.9.1
 
+    # patch kivy for our touch screens
+    # https://github.com/kivy/kivy/pull/5423
+    ( cd "$dir"/lib/python*/site-packages/kivy ; wget -q 'https://patch-diff.githubusercontent.com/raw/kivy/kivy/pull/5423.diff' && patch -p2 < 5423.diff )
+
     # kivy 1.10.0
     #$pip install Cython==0.25.2
     #4pip install kivy==1.10.0

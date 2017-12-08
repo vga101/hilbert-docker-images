@@ -127,7 +127,10 @@ RUN cd /opt/admin/ && ./setup-venv.sh \
     # ...
     && echo "DONE."
 
+COPY touchtracer /opt/admin/touchtracer
 COPY kivy_config.ini /root/.kivy/config.ini
+
+CMD ["/opt/admin/touchtracer"]
 
 
 ARG IMAGE_VERSION=latest

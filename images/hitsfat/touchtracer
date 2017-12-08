@@ -1,0 +1,14 @@
+#!/bin/sh
+# start touchtracer using a virtual environment
+
+# path to virtual environment, with default value
+PYTHON_VENV=${PYTHON_VENV:-/opt/venv2}
+
+activate="$PYTHON_VENV/bin/activate"
+if [ -r "$activate" ] ; then
+    . "$activate"
+    python "$PYTHON_VENV"/share/kivy-examples/demo/touchtracer/main.py -a -d
+else
+    echo "Error: virtual environment '$PYTHON_VENV' not found."
+    exit 1
+fi
