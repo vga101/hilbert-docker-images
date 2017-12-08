@@ -5,7 +5,6 @@
 #
 # module combinations
 # https://kivy.org/docs/installation/installation-linux.html#ubuntu-11-10-or-newer#common-dependencies
-# [note: numpy is not a dependency, only added because install may be slow]
 #
 # use them as usual, e.g. for the python2 version of kivy 1.9.1 call
 # . /opt/kivy/venv/py2-1.9.1/bin/activate
@@ -38,6 +37,10 @@ for v in 2 3 ; do
     # kivy 1.10.0
     #$pip install Cython==0.25.2
     #4pip install kivy==1.10.0
+
+    # kivy examples (only version 1.10 avail)
+    # installs to /opt/venv?/share/kivy-examples
+    $pip install Kivy-examples==1.10.0
 
     $pip install numpy==1.13.3
 

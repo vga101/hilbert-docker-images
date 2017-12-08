@@ -127,6 +127,8 @@ RUN cd /opt/admin/ && ./setup-venv.sh \
     # ...
     && echo "DONE."
 
+COPY kivy_config.ini /root/.kivy/config.ini
+
 
 ARG IMAGE_VERSION=latest
 ARG GIT_NOT_CLEAN_CHECK
