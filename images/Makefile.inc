@@ -91,6 +91,7 @@ SS := ${top_dir}/${BASE}.timestamp
 # POST = $(shell rename @COLON@ : *)
 
 all: show debug build prune show
+build-tag-push: build_full tag push
 
 show:
 	$(ECHO)
