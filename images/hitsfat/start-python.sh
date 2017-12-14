@@ -12,17 +12,19 @@ mainpy="$1"
 PYTHON_VENV=${PYTHON_VENV:-/opt/venv2}
 
 # change working directory
-echo "== cd to script directory"
 wd="$( dirname $(readlink -e $0) )"
+echo "[+] cd to script directory '$wd'"
 cd "$wd"
 
 activate="$PYTHON_VENV/bin/activate"
-if [ -r "$activate" ] ; then
-    echo "== activating virtual environment"
-    . "$activate"
-    exec python $mainpy
-else
-    echo "Error: virtual environment '$PYTHON_VENV' not found."
+if [ ! -r "$activate" ] ; then
+    echo "[+] Error: virtual environment '$PYTHON_VENV' not found."
     exit 1
 fi
+if [ ! -r "$mainpy" ] ; then
+    echo "[+] Error: script '$mainpy' not readable."
+fi
 
+echo "[+] activating virtual environment '$PYTHON_VENV'"
+. "$activate"
+exec python $mainpy

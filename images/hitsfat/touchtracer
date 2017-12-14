@@ -1,4 +1,6 @@
 #!/bin/sh
 # start touchtracer using a virtual environment
 
+PYTHON_VENV=${PYTHON_VENV:-/opt/venv2}
+
 start-python.sh "$PYTHON_VENV"/share/kivy-examples/demo/touchtracer/main.py
