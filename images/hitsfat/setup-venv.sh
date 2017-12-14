@@ -7,7 +7,7 @@
 # https://kivy.org/docs/installation/installation-linux.html#ubuntu-11-10-or-newer#common-dependencies
 #
 # use them as usual, e.g. for the python2 version of kivy 1.9.1 call
-# . /opt/kivy/venv/py2-1.9.1/bin/activate
+# . /opt/venv2/bin/activate
 
 # failure exit codes are fatal
 set -e

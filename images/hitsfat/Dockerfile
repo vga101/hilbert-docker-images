@@ -117,20 +117,20 @@ RUN /usr/local/bin/update.sh \
 RUN pip2 install --upgrade pip virtualenv setuptools \
     && pip3 install --upgrade pip virtualenv setuptools
 
-COPY setup-venv.sh /opt/admin/
-
+COPY setup-venv.sh /usr/local/bin/
 
     # pre-install virtual environment for kivy and several other packages
-RUN cd /opt/admin/ && ./setup-venv.sh \
+RUN setup-venv.sh \
     #
     # java & gaia sky
     # ...
     && echo "DONE."
 
-COPY touchtracer /opt/admin/touchtracer
+COPY start-python.sh /usr/local/bin/
+COPY touchtracer /usr/local/bin/
 COPY kivy_config.ini /root/.kivy/config.ini
 
-CMD ["/opt/admin/touchtracer"]
+CMD ["/usr/local/bin/touchtracer"]
 
 
 ARG IMAGE_VERSION=latest
