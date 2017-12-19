@@ -27,9 +27,9 @@ fi
 echo "[+] activating virtual environment '$PYTHON_VENV'"
 . "$activate"
 
-# change working directory
-wd=$( dirname "$script" )
-echo "[+] cd to script directory '$wd'"
-cd "$wd"
+## change working directory
+#wd=$( dirname "$script" )
+#echo "[+] cd to script directory '$wd'"
+#cd "$wd"
 
 exec python $script
