@@ -113,11 +113,20 @@ RUN /usr/local/bin/update.sh \
 #            # general:
 #    #&& /usr/local/bin/clean.sh
 #    && echo DONE
+RUN /usr/local/bin/install.sh unzip
 
 RUN pip2 install --upgrade pip virtualenv setuptools \
     && pip3 install --upgrade pip virtualenv setuptools
 
 COPY setup-venv.sh /usr/local/bin/
+
+# Install custom fonts (note that HelveticaNeueLTOT.zip is non-free and only licensed to ESO).
+# HelveticaNeueLTOT.zip is stored in the non-public repository 0000_general/Other
+COPY HelveticaNeueLTOT.zip /usr/local/share/fonts/truetype/
+RUN cd /usr/local/share/fonts/truetype/ \
+    && unzip HelveticaNeueLTOT.zip \
+    && rm /usr/local/share/fonts/truetype/HelveticaNeueLTOT.zip \
+    && fc-cache -f -v
 
     # pre-install virtual environment for kivy and several other packages
 RUN setup-venv.sh \
