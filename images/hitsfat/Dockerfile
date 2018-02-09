@@ -82,6 +82,9 @@ RUN /usr/local/bin/update.sh \
             #default-jdk \
             oracle-java8-installer=8u151-1~webupd8~0 \
             oracle-java8-set-default \
+            # OSD and screenshots
+            aosd-cat \
+            scrot \
             # convencience and debugging
             nano \
             vim \
