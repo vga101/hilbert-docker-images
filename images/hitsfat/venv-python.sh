@@ -5,7 +5,7 @@
 # - working directory is the script directory
 # - exec so that it receives unix signals
 
-echo "[+] start-python.sh:"
+echo "[+] venv-python.sh:"
 echo "[+] cwd = $( pwd )"
 
 # python file to start

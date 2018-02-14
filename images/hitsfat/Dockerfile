@@ -80,10 +80,11 @@ RUN /usr/local/bin/update.sh \
             # gaia sky
             #default-jre \
             #default-jdk \
-            oracle-java8-installer=8u151-1~webupd8~0 \
+            oracle-java8-installer \
             oracle-java8-set-default \
             # OSD and screenshots
             aosd-cat \
+            xosd-bin \
             scrot \
             # convencience and debugging
             nano \
