@@ -11,7 +11,6 @@ echo "[+] cwd = $( pwd )"
 # python file to start
 script=$( readlink -e "$1" )
 
-
 if [ ! -r "$script" ] ; then
     echo "[+] Error: could not read script '$script'."
     exit 1
@@ -27,9 +26,6 @@ fi
 echo "[+] activating virtual environment '$PYTHON_VENV'"
 . "$activate"
 
-## change working directory
-#wd=$( dirname "$script" )
-#echo "[+] cd to script directory '$wd'"
-#cd "$wd"
-
-exec python $script
+echo "[+] exec python $@"
+echo
+exec python $@
