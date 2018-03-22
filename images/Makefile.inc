@@ -39,6 +39,8 @@ REPO ?= ${U}
 # Get the latest git commit ID
 #GIT_COMMIT ?= $(strip $(shell git rev-parse --short HEAD))
 GIT_COMMIT ?= $(strip $(shell git describe --always --dirty --long))
+# Get date of latest commit
+GIT_COMMIT_DATE ?= $(strip $(shell git show -s --format=%ai HEAD))
 # Get the git repository URL
 #GIT_ORIGIN_URL ?= $(strip $(shell git config --get remote.origin.url))
 GIT_ORIGIN_URL ?= $(strip $(shell git ls-remote --get-url))
@@ -61,6 +63,7 @@ GIT_NOT_CLEAN_CHECK ?= $(strip $(shell git status --porcelain))
 
 IMAGE_VERSION ?= latest
 VCS_REF       ?= ${GIT_COMMIT}
+VCS_DATE      ?= ${GIT_COMMIT_DATE}
 VCS_URL       ?= ${GIT_ORIGIN_URL}
 
 
@@ -117,6 +120,7 @@ debug:
 DOCKER_BUILD_OPTS_BASIC=--pull=false --force-rm=true --rm=true \
 --no-cache=false \
 --build-arg VCS_REF="${VCS_REF}" \
+--build-arg VCS_DATE="${VCS_DATE}" \
 --build-arg VCS_URL="${VCS_URL}" \
 
 DOCKER_BUILD_OPTS_SIMPLE=${DOCKER_BUILD_OPTS_BASIC} \
