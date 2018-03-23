@@ -1,6 +1,9 @@
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
-# version of base image:
-# IMAGE_VERSION ?= latest
+
+# image tag defined in "TAG" file
+# it should correspond to hilbert/kiosk tag plus hitsfat extension
+# e.g. "0.2.0-1" ("0.2.0" is hilbert/kiosk version, "-1" is hitsfat version number)
+IMAGE_VERSION := $(shell cat TAG)
 
 # site-specific settings
 include ../../../Makefile-local.inc
