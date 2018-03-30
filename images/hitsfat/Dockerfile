@@ -20,6 +20,10 @@ LABEL com.nvidia.cuda.version="${CUDA_VERSION}
 # system packages
 RUN /usr/local/bin/update.sh \
     && /usr/local/bin/install.sh \
+            # general and x11
+            x11-utils \
+            xdotool \
+            unzip \
             # python (2 and 3), kivy
             python-pip \
             python3-pip \
@@ -90,11 +94,16 @@ RUN /usr/local/bin/update.sh \
             x11-apps \
             dstat \
             bash-completion \
-            x11-utils \
             strace \
             usbutils \
             joystick \
             jstest-gtk \
+            lm-sensors \
+            aptitude \
+            nmap \
+            sysstat \
+            iptraf \
+            iotop \
     # cuda_runtime
     && ln -s cuda-7.5 /usr/local/cuda \
     && echo "/usr/local/cuda/lib64" >> /etc/ld.so.conf.d/cuda.conf \
@@ -115,7 +124,7 @@ RUN /usr/local/bin/update.sh \
 #            # general:
 #    #&& /usr/local/bin/clean.sh
 #    && echo DONE
-RUN /usr/local/bin/install.sh unzip
+#RUN /usr/local/bin/install.sh unzip
 
 RUN pip2 install --upgrade pip virtualenv setuptools \
     && pip3 install --upgrade pip virtualenv setuptools
