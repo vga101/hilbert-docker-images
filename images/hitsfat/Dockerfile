@@ -100,6 +100,7 @@ RUN /usr/local/bin/update.sh \
             jstest-gtk \
             lm-sensors \
             aptitude \
+            apt-file \
             nmap \
             sysstat \
             iptraf \
@@ -114,7 +115,9 @@ RUN /usr/local/bin/update.sh \
     && dpkg -x /tmp/gpu-deployment-kit_*.deb . \
     && mv usr/include/nvidia/gdk/* /usr/local/cuda/include \
     && mv usr/src/gdk/nvml/lib/* /usr/local/cuda/lib64/stubs \
-    && rm -rf /tmp/gpu-deployment-kit*
+    && rm -rf /tmp/gpu-deployment-kit* \
+    # other
+    && apt-file update
     # no cleanup
     # && /usr/local/bin/clean.sh
 

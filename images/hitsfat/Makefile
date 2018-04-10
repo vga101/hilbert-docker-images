@@ -14,13 +14,12 @@ APP  = hitsfat
 # default variables and targets
 include ../Makefile.inc
 
-## build: build_compose
+# tag and push:
+# also tag as "latest"
+TAGLATEST  ?= ${REGISTRY}/${U}/${APP}:latest
 
-CMD=bash
-# CMD=hb_wrapper.sh launch.sh browser.sh -l file:///I/webgl_SphereProjection.html?HB_URL=http://127.0.0.1:8888&HB_APP_ID=${APP}
-
-#check: $(TS)
-#	export IMAGE_VERSION=${IMAGE_VERSION}
-#	$(COMPOSE) -p $(COMPOSE_PROJECT_NAME) run --rm ${APP} ${CMD}
-#	unset IMAGE_VERSION
+build-tag-push-latest: build-tag-push
+	$(DOCKER) tag "${IMG}" "${TAGLATEST}"
+	$(DOCKER) push "${TAGLATEST}"
+	$(ECHO) "Created and pushed tag '${TAGLATEST}' for image '${IMG}'"
 
