@@ -146,6 +146,7 @@ RUN setup-venv.sh \
     # ...
     && echo "DONE."
 
+COPY FingerPaint-x86_64.AppImage /usr/local/bin/
 COPY venv-python.sh /usr/local/bin/
 COPY touchtracer /usr/local/bin/
 COPY kivy_config.ini /root/.kivy/config.ini
