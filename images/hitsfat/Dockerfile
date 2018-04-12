@@ -24,6 +24,7 @@ RUN /usr/local/bin/update.sh \
             x11-utils \
             xdotool \
             unzip \
+            imagemagick \
             # python (2 and 3), kivy
             python-pip \
             python3-pip \
