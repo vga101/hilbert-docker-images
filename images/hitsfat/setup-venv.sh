@@ -8,6 +8,7 @@
 #
 # use them as usual, e.g. for the python2 version of kivy 1.9.1 call
 # . /opt/venv2/bin/activate
+# or use "venv-python.sh" instead of "python" to start the script.
 
 # failure exit codes are fatal
 set -e

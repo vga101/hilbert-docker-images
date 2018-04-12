@@ -14,11 +14,16 @@ APP  = hitsfat
 # default variables and targets
 include ../Makefile.inc
 
-# tag and push:
-# also tag as "latest"
+# "build-tag-push-latest:
+# set "latest" tag locally
+# set "latest" tag on registry
+IMGLATEST  ?= ${REPO}/${APP}:latest
 TAGLATEST  ?= ${REGISTRY}/${U}/${APP}:latest
 
 build-tag-push-latest: build-tag-push
+	$(ECHO) "Set local tag '${IMGLATEST}' for image '${IMG}'"
+	$(DOCKER) tag "${IMG}" "${IMGLATEST}"
+	$(ECHO) "Set remote tag '${TAGLATEST}' for image '${IMG}'"
 	$(DOCKER) tag "${IMG}" "${TAGLATEST}"
 	$(DOCKER) push "${TAGLATEST}"
 	$(ECHO) "Created and pushed tag '${TAGLATEST}' for image '${IMG}'"
