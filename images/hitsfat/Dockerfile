@@ -1,4 +1,4 @@
-FROM hilbert/kiosk:0.2.0
+FROM hilbert/kiosk:0.3.0
 
 RUN \
     # oracle java 1.8 for Gaia Sky 1.5
@@ -25,6 +25,7 @@ RUN /usr/local/bin/update.sh \
             xdotool \
             unzip \
             imagemagick \
+            bc \
             # python (2 and 3), kivy
             python-pip \
             python3-pip \
