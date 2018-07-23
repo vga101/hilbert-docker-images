@@ -109,6 +109,9 @@ RUN /usr/local/bin/update.sh \
             iotop \
             input-utils \
             mtdev-tools \
+            evtest \
+            evemu-tools \
+            man \
     # cuda_runtime
     && ln -s cuda-7.5 /usr/local/cuda \
     && echo "/usr/local/cuda/lib64" >> /etc/ld.so.conf.d/cuda.conf \
