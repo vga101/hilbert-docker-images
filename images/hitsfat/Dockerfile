@@ -105,6 +105,8 @@ RUN /usr/local/bin/update.sh \
             apt-file \
             nmap \
             sysstat \
+            lshw \
+            read-edid \
             iptraf \
             iotop \
             input-utils \
