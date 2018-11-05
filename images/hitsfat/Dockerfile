@@ -165,6 +165,8 @@ COPY kivy_config.ini /root/.kivy/config.ini
 
 CMD ["/usr/local/bin/touchtracer"]
 
+# just consume it
+ARG DP_CREDENTIALS=nothing
 
 ARG IMAGE_VERSION=latest
 ARG GIT_NOT_CLEAN_CHECK
@@ -173,6 +175,7 @@ ARG VCS_REF=unknown
 ARG VCS_DATE=unknown
 ARG VCS_URL=unknown
 ARG DOCKERFILE=unknown
+ARG VCS_SUMMARY=unknown
 
 LABEL maintainer="Volker Gaibler <volker.gaibler@h-its.org>" \
     org.label-schema.name="hitsfat" \
@@ -184,6 +187,7 @@ LABEL maintainer="Volker Gaibler <volker.gaibler@h-its.org>" \
     org.label-schema.build-date="${BUILD_DATE}" \
     org.label-schema.schema-version="1.0" \
     VCS_DATE="${VCS_DATE}" \
+    VCS_SUMMARY="${VCS_SUMMARY}" \
     IMAGE_VERSION="${IMAGE_VERSION}" \
     GIT_NOT_CLEAN_CHECK="${GIT_NOT_CLEAN_CHECK}" \
     DOCKERFILE="${DOCKERFILE}"
