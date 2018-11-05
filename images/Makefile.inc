@@ -46,6 +46,8 @@ GIT_COMMIT_DATE ?= $(strip $(shell git show -s --format=%ai HEAD))
 GIT_ORIGIN_URL ?= $(strip $(shell git ls-remote --get-url))
 # Get the current checkout status
 GIT_NOT_CLEAN_CHECK ?= $(strip $(shell git status --porcelain))
+# Commit summary
+GIT_SUMMARY ?= $(strip $(shell git log --pretty=format:"Commit %h | %ai | %s%d [%an]" -1))
 
 #ifneq (x$(GIT_NOT_CLEAN_CHECK), x)
 #DOCKER_TAG_SUFFIX = "-dirty"
@@ -65,6 +67,7 @@ IMAGE_VERSION ?= latest
 VCS_REF       ?= ${GIT_COMMIT}
 VCS_DATE      ?= ${GIT_COMMIT_DATE}
 VCS_URL       ?= ${GIT_ORIGIN_URL}
+VCS_SUMMARY   ?= ${GIT_SUMMARY}
 
 
 APP  ?= $(shell $(ECHO) "${current_dir}" | $(SED) -e 's@[\-]@_@g' | $(TR) '[:upper:]' '[:lower:]')
@@ -122,6 +125,8 @@ DOCKER_BUILD_OPTS_BASIC=--pull=false --force-rm=true --rm=true \
 --build-arg VCS_REF="${VCS_REF}" \
 --build-arg VCS_DATE="${VCS_DATE}" \
 --build-arg VCS_URL="${VCS_URL}" \
+--build-arg VCS_SUMMARY="${VCS_SUMMARY}" \
+--build-arg DP_CREDENTIALS="${DP_CREDENTIALS}"
 
 DOCKER_BUILD_OPTS_SIMPLE=${DOCKER_BUILD_OPTS_BASIC} \
 --build-arg IMAGE_VERSION="${IMAGE_VERSION}"
@@ -139,6 +144,7 @@ build:
 	$(CAT) "${DF}" | $(SED) -e 's@^FROM  *\([^ :#][^ :#]*\) *$$@FROM \1:$(IMAGE_VERSION)@g' > "${TMP_DF}"
 	cd ${mkfile_dir} && $(DOCKER) -D build ${DOCKER_BUILD_OPTS_BASIC} -t "${IMG}" -f "${TMP_DF}" "${mkfile_dir}"
 	$(DOCKER) images | $(GREP) -E "^${U}/${APP}  *" > "${TS}"
+	$(ECHO) "VCS_SUMMARY: ${VCS_SUMMARY}"
 #	$(MAKE) -C ${mkfile_dir}/ "${TS}"
 
 # "${ACOPYFILES}" "${ACOPYFILES2}"
@@ -148,6 +154,7 @@ build1:
 	$(CAT) "${DF}" | $(SED) -e 's@^FROM  *\([^ :#][^ :#]*\) *$$@FROM \1:$(IMAGE_VERSION)@g' > "${TMP_DF}"
 	cd ${mkfile_dir} && $(DOCKER) -D build ${DOCKER_BUILD_OPTS_SIMPLE} -t "${IMG}" -f "${TMP_DF}" "${mkfile_dir}"
 	$(DOCKER) images | $(GREP) -E "^${U}/${APP}  *" > "${TS}"
+	$(ECHO) "VCS_SUMMARY: ${VCS_SUMMARY}"
 #	$(MAKE) -C ${mkfile_dir}/ "${TS}"
 
 # ${TS} ${SS} 
@@ -157,6 +164,7 @@ build_full:
 	$(CAT) "${DF}" | $(SED) -e 's@^FROM  *\([^ :#][^ :#]*\) *$$@FROM \1:$(IMAGE_VERSION)@g' > "${TMP_DF}"
 	cd ${mkfile_dir} && $(DOCKER) -D build ${DOCKER_BUILD_OPTS} -t "${IMG}" -f "${TMP_DF}" "${mkfile_dir}"
 	$(DOCKER) images | $(GREP) -E "^${U}/${APP}  *" > "${TS}"
+	$(ECHO) "VCS_SUMMARY: ${VCS_SUMMARY}"
 #	$(MAKE) -C ${mkfile_dir}/ "${TS}"
 
 
