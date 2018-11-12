@@ -7,6 +7,7 @@ IMAGE_VERSION := 0.3.0-1
 
 # site-specific settings
 include ../../../Makefile-local.inc
+-include ~/interactives/0000_general/Secrets/storage-api.inc
 
 U = hits
 APP  = hitsfat

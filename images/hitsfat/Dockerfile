@@ -142,10 +142,14 @@ RUN pip2 install --upgrade pip virtualenv setuptools \
     && pip3 install --upgrade pip virtualenv setuptools
 
 COPY setup-venv.sh /usr/local/bin/
+COPY replace-with-nonfree-files.sh /usr/local/bin/
 
 # Install custom fonts (note that HelveticaNeueLTOT.zip is non-free and only licensed to ESO).
-# HelveticaNeueLTOT.zip is stored in the non-public repository 0000_general/Other
-COPY HelveticaNeueLTOT.zip /usr/local/share/fonts/truetype/
+ARG DP_CREDENTIALS=none
+RUN mkdir /usr/local/share/fonts/truetype/ \
+    && /usr/local/bin/replace-with-nonfree-files.sh \
+        "https://supernova.eso.org/exhibition/storage/interactives_0000_helveticaneueltot.zip" \
+        "/usr/local/share/fonts/truetype/HelveticaNeueLTOT.zip"
 RUN cd /usr/local/share/fonts/truetype/ \
     && unzip HelveticaNeueLTOT.zip \
     && rm /usr/local/share/fonts/truetype/HelveticaNeueLTOT.zip \
@@ -162,12 +166,8 @@ COPY FingerPaint-x86_64.AppImage /usr/local/bin/
 COPY venv-python.sh /usr/local/bin/
 COPY touchtracer /usr/local/bin/
 COPY kivy_config.ini /root/.kivy/config.ini
-COPY replace-with-nonfree-files.sh /usr/local/bin/
 
 CMD ["/usr/local/bin/touchtracer"]
-
-# just consume it
-ARG DP_CREDENTIALS=nothing
 
 ARG IMAGE_VERSION=latest
 ARG GIT_NOT_CLEAN_CHECK
