@@ -23,7 +23,12 @@ try_replace_file () {
     if [ "$?" -eq 0 ] ; then
 	echo "[+] Successful. Replacing image at location $destfile."
 	mv "$tmp_file" "$destfile"
-        echo "$destfile was replaced with content from $url" >"$destfile".info
+        if [ "$?" -eq 0 ] ; then
+            echo "$destfile was replaced with content from $url" >"$destfile".info
+        else
+            echo "ERROR: $destfile could not be replaced with content from $url."
+            exit 1
+        fi
     else
 	echo "[+] Could not retrieve non-free images. Using default free version."
     fi
