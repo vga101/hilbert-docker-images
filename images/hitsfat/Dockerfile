@@ -162,6 +162,7 @@ COPY FingerPaint-x86_64.AppImage /usr/local/bin/
 COPY venv-python.sh /usr/local/bin/
 COPY touchtracer /usr/local/bin/
 COPY kivy_config.ini /root/.kivy/config.ini
+COPY replace-with-nonfree-files.sh /usr/local/bin/
 
 CMD ["/usr/local/bin/touchtracer"]
 
