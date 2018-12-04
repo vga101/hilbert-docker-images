@@ -39,6 +39,9 @@ for v in 2 3 ; do
     # https://github.com/kivy/kivy/pull/5423
     ( cd "$dir"/lib/python*/site-packages/kivy ; wget -q 'https://patch-diff.githubusercontent.com/raw/kivy/kivy/pull/5423.diff' && patch -p2 < 5423.diff )
 
+    # patch kivy to make subscripts/superscripts more readable
+    ( cd "$dir"/lib/python*/site-packages/ ; patch -p0 < /opt/sub_super_larger.patch )
+
     # kivy 1.10.0
     #$pip install Cython==0.25.2
     #4pip install kivy==1.10.0

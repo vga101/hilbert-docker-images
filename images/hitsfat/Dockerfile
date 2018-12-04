@@ -142,6 +142,7 @@ RUN pip2 install --upgrade pip virtualenv setuptools \
     && pip3 install --upgrade pip virtualenv setuptools
 
 COPY setup-venv.sh /usr/local/bin/
+COPY sub_super_larger.patch /opt/sub_super_larger.patch
 COPY replace-with-nonfree-files.sh /usr/local/bin/
 
 # Install custom fonts (note that HelveticaNeueLTOT.zip is non-free and only licensed to ESO).
@@ -157,9 +158,6 @@ RUN cd /usr/local/share/fonts/truetype/ \
 
     # pre-install virtual environment for kivy and several other packages
 RUN setup-venv.sh \
-    #
-    # java & gaia sky
-    # ...
     && echo "DONE."
 
 COPY FingerPaint-x86_64.AppImage /usr/local/bin/
