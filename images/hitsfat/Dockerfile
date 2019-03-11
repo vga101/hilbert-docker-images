@@ -1,4 +1,4 @@
-FROM hilbert/kiosk:0.3.0
+FROM hilbert/kiosk:devel
 
 RUN \
     # oracle java 1.8 for Gaia Sky 1.5

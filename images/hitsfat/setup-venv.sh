@@ -32,23 +32,20 @@ for v in 2 3 ; do
     #$pip install kivy==1.8.0
 
     # kivy 1.9.1
-    $pip install Cython==0.23
-    $pip install kivy==1.9.1
+    $pip install Cython==0.25.2
+    $pip install kivy==1.10.1
 
     # patch kivy for our touch screens
     # https://github.com/kivy/kivy/pull/5423
-    ( cd "$dir"/lib/python*/site-packages/kivy ; wget -q 'https://patch-diff.githubusercontent.com/raw/kivy/kivy/pull/5423.diff' && patch -p2 < 5423.diff )
+    # patch not needed for 1.10.1 anymore!
+    #( cd "$dir"/lib/python*/site-packages/kivy ; wget -q 'https://patch-diff.githubusercontent.com/raw/kivy/kivy/pull/5423.diff' && patch -p2 < 5423.diff )
 
     # patch kivy to make subscripts/superscripts more readable
     ( cd "$dir"/lib/python*/site-packages/ ; patch -p0 < /opt/sub_super_larger.patch )
 
-    # kivy 1.10.0
-    #$pip install Cython==0.25.2
-    #4pip install kivy==1.10.0
-
     # kivy examples (only version 1.10 avail)
     # installs to /opt/venv?/share/kivy-examples
-    $pip install Kivy-examples==1.10.0
+    $pip install Kivy-examples==1.10.1
 
     $pip install numpy==1.13.3
 
@@ -62,6 +59,7 @@ for v in 2 3 ; do
 
     $pip install pyserial==3.2.1
     $pip install tornado==3.1.1
+    $pip install ujson==1.35
 
     # bonsai server: tested with psutil 1.2.1, newer may work
     $pip install psutil==1.2.1
