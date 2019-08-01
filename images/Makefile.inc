@@ -97,7 +97,9 @@ SS := ${top_dir}/${BASE}.timestamp
 # POST = $(shell rename @COLON@ : *)
 
 all: show debug build prune show
-build-tag-push: build_full tag push
+#build-tag-push: build_full tag push
+#meant for HITS interactives:
+build-tag-push: build_hits tag push
 
 show:
 	$(ECHO)
@@ -121,12 +123,8 @@ debug:
 	$(ECHO) "DOCKER_BUILD_OPTS : ${DOCKER_BUILD_OPTS}"
 
 DOCKER_BUILD_OPTS_BASIC=--pull=false --force-rm=true --rm=true \
---no-cache=false \
---build-arg VCS_REF="${VCS_REF}" \
---build-arg VCS_DATE="${VCS_DATE}" \
---build-arg VCS_URL="${VCS_URL}" \
---build-arg VCS_SUMMARY="${VCS_SUMMARY}" \
---build-arg DP_CREDENTIALS="${DP_CREDENTIALS}"
+--no-cache=false 
+
 
 DOCKER_BUILD_OPTS_SIMPLE=${DOCKER_BUILD_OPTS_BASIC} \
 --build-arg IMAGE_VERSION="${IMAGE_VERSION}"
@@ -136,6 +134,13 @@ DOCKER_BUILD_OPTS=${DOCKER_BUILD_OPTS_SIMPLE} \
 --build-arg BUILD_DATE=`date -u +"%Y-%m-%dT%H:%M:%SZ"` \
 --build-arg DOCKERFILE="${APP}_${IMAGE_VERSION}_Dockerfile"
 
+
+DOCKER_BUILD_OPTS_HITS=${DOCKER_BUILD_OPTS} \
+--build-arg VCS_REF="${VCS_REF}" \
+--build-arg VCS_DATE="${VCS_DATE}" \
+--build-arg VCS_URL="${VCS_URL}" \
+--build-arg VCS_SUMMARY="${VCS_SUMMARY}" \
+--build-arg DP_CREDENTIALS="${DP_CREDENTIALS}"
 
 TMP_DF=${mkfile_dir}/${APP}_${IMAGE_VERSION}_Dockerfile
 
@@ -156,6 +161,7 @@ build1:
 	$(DOCKER) images | $(GREP) -E "^${U}/${APP}  *" > "${TS}"
 	$(ECHO) "VCS_SUMMARY: ${VCS_SUMMARY}"
 #	$(MAKE) -C ${mkfile_dir}/ "${TS}"
+build_simple: build1
 
 # ${TS} ${SS} 
 ## Maybe try using docker-compose for building?
@@ -163,6 +169,14 @@ build_full:
 	$(RM) -f "${TS}"
 	$(CAT) "${DF}" | $(SED) -e 's@^FROM  *\([^ :#][^ :#]*\) *$$@FROM \1:$(IMAGE_VERSION)@g' > "${TMP_DF}"
 	cd ${mkfile_dir} && $(DOCKER) -D build ${DOCKER_BUILD_OPTS} -t "${IMG}" -f "${TMP_DF}" "${mkfile_dir}"
+	$(DOCKER) images | $(GREP) -E "^${U}/${APP}  *" > "${TS}"
+	$(ECHO) "VCS_SUMMARY: ${VCS_SUMMARY}"
+#	$(MAKE) -C ${mkfile_dir}/ "${TS}"
+
+build_hits:
+	$(RM) -f "${TS}"
+	$(CAT) "${DF}" | $(SED) -e 's@^FROM  *\([^ :#][^ :#]*\) *$$@FROM \1:$(IMAGE_VERSION)@g' > "${TMP_DF}"
+	cd ${mkfile_dir} && $(DOCKER) -D build ${DOCKER_BUILD_OPTS_HITS} -t "${IMG}" -f "${TMP_DF}" "${mkfile_dir}"
 	$(DOCKER) images | $(GREP) -E "^${U}/${APP}  *" > "${TS}"
 	$(ECHO) "VCS_SUMMARY: ${VCS_SUMMARY}"
 #	$(MAKE) -C ${mkfile_dir}/ "${TS}"
