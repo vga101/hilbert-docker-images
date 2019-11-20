@@ -149,7 +149,7 @@ build:
 	$(CAT) "${DF}" | $(SED) -e 's@^FROM  *\([^ :#][^ :#]*\) *$$@FROM \1:$(IMAGE_VERSION)@g' > "${TMP_DF}"
 	cd ${mkfile_dir} && $(DOCKER) -D build ${DOCKER_BUILD_OPTS_BASIC} -t "${IMG}" -f "${TMP_DF}" "${mkfile_dir}"
 	$(DOCKER) images | $(GREP) -E "^${U}/${APP}  *" > "${TS}"
-	$(ECHO) "VCS_SUMMARY: ${VCS_SUMMARY}"
+	#$(ECHO) "VCS_SUMMARY: ${VCS_SUMMARY}"
 #	$(MAKE) -C ${mkfile_dir}/ "${TS}"
 
 # "${ACOPYFILES}" "${ACOPYFILES2}"
@@ -159,7 +159,7 @@ build1:
 	$(CAT) "${DF}" | $(SED) -e 's@^FROM  *\([^ :#][^ :#]*\) *$$@FROM \1:$(IMAGE_VERSION)@g' > "${TMP_DF}"
 	cd ${mkfile_dir} && $(DOCKER) -D build ${DOCKER_BUILD_OPTS_SIMPLE} -t "${IMG}" -f "${TMP_DF}" "${mkfile_dir}"
 	$(DOCKER) images | $(GREP) -E "^${U}/${APP}  *" > "${TS}"
-	$(ECHO) "VCS_SUMMARY: ${VCS_SUMMARY}"
+	#$(ECHO) "VCS_SUMMARY: ${VCS_SUMMARY}"
 #	$(MAKE) -C ${mkfile_dir}/ "${TS}"
 build_simple: build1
 
@@ -170,7 +170,7 @@ build_full:
 	$(CAT) "${DF}" | $(SED) -e 's@^FROM  *\([^ :#][^ :#]*\) *$$@FROM \1:$(IMAGE_VERSION)@g' > "${TMP_DF}"
 	cd ${mkfile_dir} && $(DOCKER) -D build ${DOCKER_BUILD_OPTS} -t "${IMG}" -f "${TMP_DF}" "${mkfile_dir}"
 	$(DOCKER) images | $(GREP) -E "^${U}/${APP}  *" > "${TS}"
-	$(ECHO) "VCS_SUMMARY: ${VCS_SUMMARY}"
+	#$(ECHO) "VCS_SUMMARY: ${VCS_SUMMARY}"
 #	$(MAKE) -C ${mkfile_dir}/ "${TS}"
 
 build_hits:
